@@ -1,30 +1,77 @@
-"use strict";
+si analizzano i requisiti che il programma dovrà avere per la gestione del sito ovvero le funzionalità.
+il programma dovrà avere una parte dedicata alle connessioni al server e una parte dedicata al client.
+dopo aver creato un database si dovra gestire la parte di connessione del server al database e
+si dovrà gestire il crud (create, read, update,delete) da parte del client al server tramite un'api
 
-let domande = [
-    { domanda: "Qual è il mio colore preferito?@\nRisposta: 1)Blu 2)Rosso 3)Verde", risposta: "blu" },
-    { domanda: "Qual è il tuo animale preferito?@\nRisposta: 1)Gatto 2)Cane 3)Gallina", risposta: "gatto" }
-];
+Film tabella
+id intero auto_increment primary key, 
+titolo varchar(255)
+anno_uscita int
+regista varchar(255)
+fk_id_genere int 
+foreign key (fk_id_genere) from genere(id)
 
-let risposteUtente = [];
-let score = 0;
+serie_tv tabella
+id intero auto_increment primary key,
+titolo varchar(255)
+anno_uscita int(4),
+stagione v(255)
+episodi int
+regista varchar(255)
+attori varchar(255)
+fk_id_genere int 
+foreign key (fk_id_genere) from genere(id)
 
-for (let i = 0; i < domande.length; i++) {
-    let risposta = prompt(domande[i].domanda + "\nInserisci la tua risposta:");
-    risposteUtente.push(risposta.toLowerCase());
-    if (risposteUtente[i] === domande[i].risposta) {
-        score++;
-    }
-}
+clienti tabella 
+id intero auto_increment primary key,
+nick varchar(255)
+email varchar(255)
+credito int
+film_acquistato boolean
 
-for (let i = 0; i < risposteUtente.length; i++) {
-    let index= domande[i].domanda.indexOf("@");
-    if (risposteUtente[i] === domande[i].risposta) {
-        alert(`Alla domanda ${domande[i].domanda.substring(0,index)}"\n hai risposto: ${risposteUtente[i]}`+"\nRisposta corretta!");
-    }
-    else {
-        alert(`Alla domanda "${domande[i].domanda.substring(0,index)}"\n hai risposto: ${risposteUtente[i]}`+"\nRisposta errata!"
-        +"\nLa risposta corretta è: " + domande[i].risposta
-        );
-    }
-}
-alert(`Hai totalizzato\n ${score} su ${domande.length} domande corrette.`);
+attori
+id intero auto_increment primary key,
+nome  varchar(255)
+film_interpretati  text(255)
+anno_nascita  int(4)
+
+genere tabella 
+id intero auto_increment primary key,
+nome varchar(255)
+
+film_attore	tabella
+id intero auto_increment primary key,
+fk_film int(può essere nullable in caso di serie_tv)
+fk_serie int(può essere nullable in caso di film)
+fk_attore int
+
+cliente_film_serieTV 	tabella
+id intero auto_increment primary key,
+fk_film int(può essere nullable in caso di serie_tv)
+fk_serie int(può essere nullable in caso di film)
+fk_cliente 
+
+
+
+relazioni tra tabelle
+cliente film relazione n a n
+cliente serie_tv relazione n a n
+attore film relazione n a n
+attore serie_tv relazione n a n
+
+
+insert into film (
+titolo ,
+anno_uscita ,
+regista ,
+genere ,
+)value("il giorno dopo",2025,"gianluca",1)
+
+select * from film     
+join genere on genere.id = film.fk_id_genere 
+where genere.nome = "commedia"
+
+select * from film
+join film_attore on film.id =film_attore.fk_id_film
+join film_attore on attore.id= film_attore.fk_id_attore
+where attore.nome = "gianfranco"
