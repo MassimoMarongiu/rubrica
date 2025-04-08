@@ -1,0 +1,30 @@
+"use strict";
+
+let domande = [
+    { domanda: "Qual è il mio colore preferito?@\nRisposta: 1)Blu 2)Rosso 3)Verde", risposta: "blu" },
+    { domanda: "Qual è il tuo animale preferito?@\nRisposta: 1)Gatto 2)Cane 3)Gallina", risposta: "gatto" }
+];
+
+let risposteUtente = [];
+let score = 0;
+
+for (let i = 0; i < domande.length; i++) {
+    let risposta = prompt(domande[i].domanda + "\nInserisci la tua risposta:");
+    risposteUtente.push(risposta.toLowerCase());
+    if (risposteUtente[i] === domande[i].risposta) {
+        score++;
+    }
+}
+
+for (let i = 0; i < risposteUtente.length; i++) {
+    let index= domande[i].domanda.indexOf("@");
+    if (risposteUtente[i] === domande[i].risposta) {
+        alert(`Alla domanda ${domande[i].domanda.substring(0,index)}"\n hai risposto: ${risposteUtente[i]}`+"\nRisposta corretta!");
+    }
+    else {
+        alert(`Alla domanda "${domande[i].domanda.substring(0,index)}"\n hai risposto: ${risposteUtente[i]}`+"\nRisposta errata!"
+        +"\nLa risposta corretta è: " + domande[i].risposta
+        );
+    }
+}
+alert(`Hai totalizzato\n ${score} su ${domande.length} domande corrette.`);
